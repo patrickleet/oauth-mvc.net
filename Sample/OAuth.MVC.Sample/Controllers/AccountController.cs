@@ -15,7 +15,8 @@ namespace OAuth.MVC.Sample.Controllers
     }
 
 // ReSharper disable InconsistentNaming
-    public ActionResult AuthoriseRequestToken(string oauth_token, string oauth_callback)
+	[HttpGet]
+    public ActionResult AuthorizeRequestToken(string oauth_token, string oauth_callback)
 // ReSharper restore InconsistentNaming
     {
       var requestToken = _tokenRepository.GetRequestToken(oauth_token);
@@ -34,7 +35,7 @@ namespace OAuth.MVC.Sample.Controllers
         requestToken.AccessToken = accessToken;
         _tokenRepository.SaveAccessToken(accessToken);
         _tokenRepository.SaveRequestToken(requestToken);
-        return new JsonResult {Data=accessToken};
+        return Json(new {Data=accessToken}, JsonRequestBehavior.AllowGet);
       }
       return new EmptyResult();
      

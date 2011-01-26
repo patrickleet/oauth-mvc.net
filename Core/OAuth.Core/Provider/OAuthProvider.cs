@@ -54,11 +54,26 @@ namespace OAuth.Core.Provider
         public virtual void AccessProtectedResourceRequest(IOAuthContext context)
         {
             var token = _tokenStore.GetToken(context);
+			// 3 legged
             if (token != null)
-                context.TokenSecret = token.TokenSecret;
-            InspectRequest(context);
+            {
+				context.TokenSecret = token.TokenSecret;
+				InspectRequest(context);
+			}
+			// 2 legged
+			else if (token == null && String.IsNullOrEmpty(context.Token))
+			{
+				InspectRequest(context);
+				var accessToken = _tokenStore.CreateTwoLeggedAccessToken(context);
+				context.Token = accessToken.Token;
+				context.TokenSecret = accessToken.TokenSecret;
+			}
+			else
+			{
+				InspectRequest(context);
+			}
 
-            _tokenStore.ConsumeAccessToken(context);
+			_tokenStore.ConsumeAccessToken(context);
         }
 
         #endregion

@@ -26,5 +26,10 @@ namespace OAuth.MVC.Sample.Controllers
       return Json(Request.Form);
     }
     
+
+	 public ViewResult Test()
+	 {
+		return View();
+	 }
   }
 }

@@ -13,6 +13,7 @@ using OAuth.Core.Provider;
 using OAuth.Core.Provider.Inspectors;
 using OAuth.Core.Storage;
 using OAuth.Core.Storage.Interfaces;
+using OAuth.MVC.Library.Controllers;
 
 
 namespace OAuth.MVC.Sample
@@ -38,6 +39,7 @@ namespace OAuth.MVC.Sample
           base.OnApplicationStarted();
           RegisterRoutes(RouteTable.Routes);
           RegisterAllControllersIn(Assembly.GetExecutingAssembly());
+		  RegisterAllControllersIn(Assembly.GetAssembly(typeof(OAuthController)));
       }
       protected override IKernel CreateKernel()
       {
@@ -163,6 +165,22 @@ namespace OAuth.MVC.Sample
                                  "Token has expired (they're only valid for 1 minute)");
       }
     }
+
+	public IToken CreateTwoLeggedAccessToken(IOAuthContext context)
+	{
+		var accessToken = new AccessToken
+                            {
+                              ConsumerKey = context.ConsumerKey,
+                              ExpireyDate = DateTime.UtcNow.AddDays(20),
+                              Realm = context.Realm,
+                              Token = Guid.NewGuid().ToString(),
+                              TokenSecret = Guid.NewGuid().ToString(),
+                              UserName = Guid.NewGuid().ToString(),
+                            };
+        _repository.SaveAccessToken(accessToken);
+
+		return accessToken;
+	}
 
     public IToken GetAccessTokenAssociatedWithRequestToken(IOAuthContext requestContext)
     {

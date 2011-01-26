@@ -19,6 +19,7 @@ namespace OAuth.Core
         readonly BoundParameter _timestamp;
         readonly BoundParameter _token;
         readonly BoundParameter _tokenSecret;
+		private string _twoLeggedToken;
         readonly BoundParameter _version;
         readonly BoundParameter _verifier;
         readonly BoundParameter _callback;
@@ -187,8 +188,24 @@ namespace OAuth.Core
 
         public string Token
         {
-            get { return _token.Value; }
-            set { _token.Value = value; }
+            get 
+			{
+				if (String.IsNullOrEmpty(_token.Value))
+				{
+					if (String.IsNullOrEmpty(_twoLeggedToken))
+						return "";
+					else	
+						return _twoLeggedToken; 
+				}
+				else
+				{
+					return _token.Value;
+				}
+			}
+            set
+			{
+				_twoLeggedToken = value;
+			}
         }
 
         public string TokenSecret
@@ -298,7 +315,7 @@ namespace OAuth.Core
         class BoundParameter
         {
             readonly IOAuthContext _context;
-            readonly string _name;
+            private string _name;
 
             public BoundParameter(string name, IOAuthContext context)
             {

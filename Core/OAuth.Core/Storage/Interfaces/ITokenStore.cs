@@ -17,6 +17,13 @@ namespace OAuth.Core.Storage.Interfaces
         /// <param name="requestContext"></param>
         void ConsumeRequestToken(IOAuthContext requestContext);
 
+		/// <summary>
+        /// Creates an access token for the consumer in the case of two legged authentication.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        IToken CreateTwoLeggedAccessToken(IOAuthContext context);
+
         /// <summary>
         /// Should consume a use of an access token, throwing a <see cref="OAuthException" /> on failure.
         /// </summary>

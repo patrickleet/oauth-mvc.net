@@ -48,6 +48,10 @@ namespace OAuth.Core
                 FormEncodedParameters = request.Form,
                 QueryParameters = request.QueryString,
             };
+			if (String.IsNullOrEmpty(context.Token))
+				context.Token = "";
+			if (String.IsNullOrEmpty(context.TokenSecret))
+				context.TokenSecret = "";
             if (request.Headers.AllKeys.Contains("Authorization"))
             {
                 context.AuthorizationHeaderParameters = UriUtility.GetHeaderParameters(request.Headers["Authorization"]).ToNameValueCollection();
