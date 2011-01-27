@@ -38,12 +38,12 @@ namespace OAuth.MVC.Sample
       {
           base.OnApplicationStarted();
           RegisterRoutes(RouteTable.Routes);
-          RegisterAllControllersIn(Assembly.GetExecutingAssembly());
-		  RegisterAllControllersIn(Assembly.GetAssembly(typeof(OAuthController)));
       }
       protected override IKernel CreateKernel()
       {
-          return new StandardKernel(new SampleModule());
+          var kernel = new StandardKernel(new SampleModule());
+		  kernel.Load(Assembly.GetExecutingAssembly());
+		  return kernel;
       }
    
   }
