@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Web.Mvc;
+using OAuth.MVC.Sample.Models.Repositories;
+using OAuth.MVC.Sample.Models.Implementations;
 
 namespace OAuth.MVC.Sample.Controllers
 {

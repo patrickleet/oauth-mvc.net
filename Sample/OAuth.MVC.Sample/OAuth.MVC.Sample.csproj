@@ -83,6 +83,16 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\Implementations\SampleConsumerStore.cs" />
+    <Compile Include="Infrastructure\Implementations\SampleMemoryTokenStore.cs" />
+    <Compile Include="Infrastructure\Implementations\SampleNonceStore.cs" />
+    <Compile Include="Infrastructure\Implementations\TestConsumerStore.cs" />
+    <Compile Include="Infrastructure\Implementations\TestNonceStore.cs" />
+    <Compile Include="Infrastructure\SampleModule.cs" />
+    <Compile Include="Models\Implementations\AccessToken.cs" />
+    <Compile Include="Models\Repositories\TokenRepository.cs" />
+    <Compile Include="Models\Implementations\RequestToken.cs" />
+    <Compile Include="Models\TestCertificates.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -120,7 +130,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\OAuth.Core\OAuth.Core.csproj">
